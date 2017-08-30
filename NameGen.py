@@ -46,21 +46,11 @@ def pickOne( options ) :
     for x in range(0, len(options) ):
     	totalWeight += options[x].weight
 
-    randSelect = random.randint(1 , totalWeight)
+    while True:
+      randSelect = random.randint(0 , len(options) - 1)
 
-    #print "Selection: " + str(randSelect)
-
-    totalWeight = 0
-
-    for x in range(0, len(options) - 2):
-
-    	if ( randSelect >= totalWeight and randSelect < (totalWeight + options[x + 1].weight ) ) :
-            return options[x].out
-
-        totalWeight += options[x].weight    
-
-    return pickOne( options )
-
+      if ( random.randint(0, totalWeight) < options[randSelect].weight ):
+        return options[randSelect].out
 
 
 # Takes in a string of cv's
@@ -78,22 +68,34 @@ def getName( pattern , archetype ) :
 
     return name[0:1].upper() + name[1:] 
 
+syl = ["cv","cvc","vc","c","v"]
 
-for x in range(0,100) :
+for x in range(0,10) :
 
-    pattern = random.randint(0,5)
+    name = ""
 
-    if ( pattern == 0 ):
-      print str(x) + ":  " + getName("cvcv","none")
-    elif ( pattern == 1 ):
-      print str(x) + ":  " + getName("cvcvc","none")
-    elif ( pattern == 2 ):
-      print str(x) + ":  " + getName("cvc","none")
-    elif ( pattern == 3 ):
-      print str(x) + ":  " + getName("cvvc","none")
-    elif ( pattern == 4 ):
-      print str(x) + ":  " + getName("ccvc","none")
-    elif ( pattern == 0 ):
-      print str(x) + ":  " + getName("cvv","none")
-    else :
-      print str(x) + ":  " + getName("vvcvc","none")
+    syls = random.randint(2,5)
+
+    y = 0 
+    
+    # MinLen + MaxLen
+    while y < syls and (len(name) >= 8 or len(name) <= 3) :
+      name += syl[random.randint(0,len(syl) - 1)]
+    
+    '''
+    Gateway requirements
+
+    Ro3
+    MinLen
+    MaxLen
+    Entropy (length of c/v chains)
+    Repeats
+    '''
+    
+    # Ro3
+    name = name.replace("ccc", "cvc")
+
+
+    print getName( name , "" )
+
+
