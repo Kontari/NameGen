@@ -27,9 +27,13 @@ class letter():
 consonants = [ letter("b",3), letter("c",3), letter("d",8), letter("f",4),
                letter("g",4), letter("h",12), letter("j",1), letter("k",2),
                letter("l",8), letter("m",5), letter("n",13), letter("p",4),
-               letter("q",1), letter("r",12), letter("s",13), letter("t",18),
+               letter("q",1), letter("r",12), letter("s",13), letter("t",13),
                letter("v",2), letter("w",4), letter("x",1), letter("y",4),
                letter("z",1) ]
+
+extended = consonants + [ letter("ph", 6), letter("tt", 6), letter("th", 6),
+                          letter("er", 6), letter("ing", 6), letter("ph", 6),
+                          letter("li", 6), letter("el", 6), letter("ic", 6)]
 
 vowel = [ letter("a",16), letter("e",24),
           letter("i",14), letter("o",15), 
@@ -62,7 +66,7 @@ def getName( pattern , archetype ) :
     for x in list(pattern) : 
 	
         if ( str(x) == "c" ) : 
-          name += str(pickOne(consonants))
+          name += str(pickOne(extended)) #consonants
         else :
           name += str(pickOne(vowel))
 
@@ -92,10 +96,12 @@ for x in range(0,10) :
     Repeats
     '''
     
-    # Ro3
-    name = name.replace("ccc", "cvc")
+    # Ro3 + Entropy
+    name = name.replace("ccc", syl[random.randint(0,len(syl) - 1)])
 
 
-    print getName( name , "" )
+
+
+    print str(x + 1) + ": " + getName( name , "" )
 
 
