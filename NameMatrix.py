@@ -53,7 +53,7 @@ def select( letter_weights ):
   selected = random.randint( 1, len(letter_weights) - 1)
   
   while True:
-    if random.randint(0,total) < letter_weights[selected] :
+    if random.randint(0,total ) <= (letter_weights[selected]) :
       return selected # return index of letter
     else :
       selected = random.randint(0, len(letter_weights) - 1)
@@ -71,9 +71,9 @@ def train_set( data ):
       try:
         matrix[ letters.index( list(data[x])[y]) ][ letters.index( list(data[x])[y + 1] ) ] += 1
       except ValueError:
-        print "fail"
+        pass
       else:
-        print "fail"
+        pass
     
 names = []
 avglen = 3
@@ -92,5 +92,5 @@ train_set( names )
 out()
 
 for x in range(100):
-  print str(x + 1) + ": " + str(create( avglen ))
+  print str(x + 1) + ": " + str(create( random.randint(3,5) ))
 
