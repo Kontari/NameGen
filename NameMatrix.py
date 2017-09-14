@@ -14,7 +14,9 @@ def out():
     print "--- " + letters[x] + " ---"
 
     for y in range( 0, len(matrix[x]) ):
-      print (matrix[x])[y]
+      
+      #matrix[x][y] -= 1
+      print matrix[x][y]
  
 #
 # Makes a word of length length
@@ -66,10 +68,29 @@ def train_set( data ):
     
     for y in range( len(list(data[x])) - 1):
       
-      matrix[letters.index( list(data[x])[y])][letters.index( list(data[x])[y + 1] )] += 1
+      try:
+        matrix[ letters.index( list(data[x])[y]) ][ letters.index( list(data[x])[y + 1] ) ] += 1
+      except ValueError:
+        print "fail"
+      else:
+        print "fail"
+    
+names = []
+avglen = 3
+
+# assuming raw_input reads 4944 names
+for x in range(0,4944):
+  names.append( str(raw_input()))
+  avglen += len( names[-1] )
   
+avglen /= 4944
 
-train_set( ["john", "mark" , "phil", "austin", "tom" , "jim", "tony", "sam", "steve" ] )
+print names
 
-for x in range(10):
-  print str(x + 1) + ": " + str(create( 5 ))
+train_set( names )
+
+out()
+
+for x in range(100):
+  print str(x + 1) + ": " + str(create( avglen ))
+
