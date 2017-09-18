@@ -30,14 +30,47 @@ def create( length ):
   
   last_char = word
   
-  
   for x in range(length):
   
     word += letters[select(matrix[letters.index(last_char)])]
     
     last_char =  word[-1]
     
-  return word
+  # --- Validation phase --- #
+  
+  # make sure !(c >= v)
+  vowel = 0
+
+  for x in range( len(word) ):
+    
+    if(word[x] in "aeiou"):    
+      vowel += 1
+  
+  # cons isnt repeated more than once
+  pass_repeat = True
+  
+  for x in range( len(word) ):
+     if( word.count(word[x]) > 2 ) :
+       pass_repeat = False
+    
+  # terminate sequences of ccc  
+  streak = 0
+  pass_streak = True
+  
+  for x in range( len(word) ):
+    if( word[x] not in "aeiouy"):
+      streak += 1
+    else:
+      streak = 0
+    
+    if( streak > 2 ):
+      pass_streak = False
+  
+  if( vowel <= (len(word) - vowel) and vowel > 0 and pass_repeat and pass_streak): 
+    return word  
+  else:
+    #print "-Recalled- : " + word
+    return create(length)
     
 
 # selects item from weighted list
@@ -63,12 +96,10 @@ def train_set( data ):
   
   for x in range( len(data) - 1 ):
     
-    # Train space before word
-    #matrix[0][letters.index(list(data[0]))] += 1
-    
     for y in range( len(list(data[x])) - 1):
       
       try:
+        # += changes weight
         matrix[ letters.index( list(data[x])[y]) ][ letters.index( list(data[x])[y + 1] ) ] += 1
       except ValueError:
         pass
@@ -78,8 +109,7 @@ def train_set( data ):
 names = []
 avglen = 3
 
-# assuming raw_input reads 4944 names
-for x in range(0,4944):
+for x in range(0,3899):
   names.append( str(raw_input()))
   avglen += len( names[-1] )
   
@@ -93,4 +123,3 @@ out()
 
 for x in range(100):
   print str(x + 1) + ": " + str(create( random.randint(3,5) ))
-
